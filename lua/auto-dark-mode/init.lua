@@ -30,7 +30,9 @@ local function parse_query_response(res)
 		-- 0: no preference
 		-- 1: dark
 		-- 2: light
-		if string.match(res[1], "uint32 1") ~= nil then
+		if string.match(res[1], "uint32 0") ~= nil then
+			return false
+		elseif string.match(res[1], "uint32 1") ~= nil then
 			return true
 		elseif string.match(res[1], "uint32 2") ~= nil then
 			return false
@@ -114,7 +116,7 @@ local function init()
 			"/v",
 			"AppsUseLightTheme",
 		}
-  elseif system == "Windows_NT" then
+	elseif system == "Windows_NT" then
 		-- Don't swap the quotes; it breaks the code
 		query_command = {
 			"reg.exe",
@@ -123,7 +125,6 @@ local function init()
 			"/v",
 			"AppsUseLightTheme",
 		}
-
 	else
 		return
 	end
